@@ -3,7 +3,6 @@
 #
 #****************************************************************
 # Licensed Materials - Property of IBM
-# 5725-F96 IBM MessageSight
 # (C) Copyright IBM Corp. 2014 All Rights Reserved.
 #
 # US Government Users Restricted Rights - Use, duplication or
@@ -200,19 +199,13 @@ The primary logic for this HTML Page
    *
    * Example:  videoClient.html?server=servername&port=1883&rtcommTopicPath=/rtcommcompany/
    */
-  var port = '';
-  if (window.document.location.port === '') { 
-    port = (window.document.location.protocol === 'https:') ? 443 : 80;
-  } else {
-    port = window.document.location.port;
-  }
-
   var providerConfig = {
     server : window.document.location.hostname,
-    port : port,
+//    port : window.document.location.port,
     managementTopicName : "management",
     appContext: "default",
-    rtcommTopicPath: "/rtcomm/",
+    rtcommTopicPath: "/rtcommVideoClientSample-12345/",
+    iceServers: ['stun:stun.l.google.com:19302', 'stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
     createEndpoint : true,
     monitorPresence: true,
     presence: {topic: 'defaultRoom'}
@@ -311,7 +304,6 @@ The primary logic for this HTML Page
         broadcast:  { 
           audio: BROADCAST, 
           video: BROADCAST},
-        iceServers: ['stun:stun.l.google.com:19302','stun:stun1.l.google.com:19302','stun:stun2.l.google.com:19302'],
         trickleICE: trickleICE,
         mediaOut: document.querySelector('#selfView'),
         mediaIn: document.querySelector('#remoteView')

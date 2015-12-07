@@ -19,5 +19,6 @@
   },
   "_source": "git://github.com/m2mIO/bower-mqttws.git",
   "_target": "~1.0.0",
-  "_originalSource": "bower-mqttws"
+  "_originalSource": "bower-mqttws",
+  "_direct": true
 }

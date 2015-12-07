@@ -34,6 +34,7 @@
     "commit": "f0c03f382841309253975e6915b3685d79cc1819"
   },
   "_source": "git://github.com/webrtc/adapter.git",
-  "_target": "~0",
-  "_originalSource": "webrtc-adapter"
+  "_target": "~0.2.5",
+  "_originalSource": "webrtc-adapter",
+  "_direct": true
 }
