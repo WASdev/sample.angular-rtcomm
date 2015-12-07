@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<!--
+#
+#****************************************************************
+# Licensed Materials - Property of IBM
+# 5725-F96 IBM MessageSight
+# (C) Copyright IBM Corp. 2014 All Rights Reserved.
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with
+# IBM Corp.
+#****************************************************************
+#
+-->
+<html>
+<head>  
+<meta charset="utf-8">
+<title>IBM WebRTC Demo</title>
+<!-- Load the CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="resources/css/video.css" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- The Main Page container -->
+<div id="MainContainer" class="mainContentContainer">
+  <div id="topContainer">
+     <div class="pull-left logo">
+        <span class="blue">IBM</span> WebRTC Sample
+     </div>
+     <div class="pull-right logo" style="font-size: 24px; padding-right: 30px">
+        <span id="displayNameStr"></span>
+     </div>
+  </div> <!-- End of the topContainer -->
+  <!-- alert message for use later -->
+  <div id='mainAlert' class="alert alert-danger alert-dismissible" style="display:none" role="alert">
+     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+     <div id='alertMessage'></div>
+  </div>
+  <div id="videoContainer">
+      <!-- The selfView is where the Video you are broadcasting is shown.  You need to 'MUTE' this (muted="true") or you get feedback -->
+    <video title="selfView" poster='resources/video_camera.png' id="selfView" class="selfView" autoplay="true" muted="true"></video>
+    <!-- The remoteView is where the Video you are receiving is shown. -->
+    <video title="remoteView" poster='resources/video_camera_big.png' id="remoteView" class="remoteView" autoplay="true"></video>
+  </div> <!-- End of the videoContainer -->
+  <div class="video-controls">
+    <div class="btn-group pull-left" style='padding-top:10px'>
+     <button id='btnRegister' class='btn btn-primary'>
+       Register
+      </button>
+      <button id='btnConnect' class='btn btn-default' disabled='disabled'>
+         Connect  
+      </button>
+    </div>
+     <div id='statusMessage' class="pull-right logo" style="font-size: 24px; padding-right: 30px">
+          Please Register
+    </div>
+  </div> <!-- End of the video-controls -->
+</div> <!-- end of the MainContainer -->
+
+<!-- The Register Modal Dialog -->
+<div id="registerModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Register</h4>
+      </div>
+      <div class="modal-body">
+        <div id='regAlert' class="alert alert-danger " style="display:none" role="alert" >
+        A UserID is required to Register
+        </div>
+          It is necessary to register before doing anything. The ID used here
+          is the ID that another registered user can use to <b>Connect</b>
+          <br/>
+          <br/>
+          <div>
+        <div class="input-group">
+          <span class="input-group-addon">ID:</span>
+          <input id="userid" class="form-control" type="text"  placeholder="userid to register"/>
+        </div>
+       </div>
+      </div>
+      <div class="modal-footer">
+        <button id='regCancel' type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button id='regGo' type="button" class="btn btn-primary" data-dismiss="modal" >Go</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- The Connect Modal Dialog -->
+<div id="connectModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Connect</h4>
+      </div>
+      <div class="modal-body">
+      <div id='connAlert' class="alert alert-danger" style="display:none"  role="alert" >
+        A UserID is required to Connect to
+        </div>
+         Enter the User ID to connect to.  They must be registered with the same server.
+          <br/>
+          <br/>
+          <div>
+        <div class="input-group">
+          <span class="input-group-addon">ID:</span>
+          <input id="remoteid" class="form-control" type="text"  placeholder="userid to connect to"/>
+        </div>
+       </div>
+      </div>
+      <div class="modal-footer">
+        <button id='connectCancel' type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button id='connectGo' type="button" class="btn btn-primary" data-dismiss="modal" >Go</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- The Answer Dialog -->
+<div id="answerDialog" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Answer?</h4>
+      </div>
+      <div class="modal-body">
+       <p> Answer a call</p>
+      </div>
+      <div class="modal-footer">
+        <button id='answerNo' type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button id='answerYes' type="button" class="btn btn-primary">Yes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 
+This is SAMPLE is dependent on jQuery and bootstrap. Both load from a CDN. Alternatively, download jquery 
+from jquery.com/downloads.  This app was tested with jQuery 2.1.1.
+-->
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<!-- The following paths may need to be modified depending on the location of this script. -->
+<!-- If you load via bower, use it this way
+<script src="../bower_components/bower-mqttws/mqttws31.js"></script>
+<script src="../bower_components/webrtc-adapter/adapter.js"></script>
+-->
+<script src="//git.eclipse.org/c/paho/org.eclipse.paho.mqtt.javascript.git/plain/src/mqttws31.js"></script>
+<script src="//cdn.rawgit.com/webrtc/adapter/master/adapter.js"></script>
+
+<script src="../dist/rtcomm.js"></script>
+
+<!-- 
+The primary logic for this HTML Page
+-->
+<script>
+
+  /*************************************************
+   * Define Globals 
+   *************************************************/
+
+  /* 
+   * Define the configuration for the EndpointProvider.  THis is REQUIRED and generally must be changed.
+   * It MUST match the rtcomm configuration used on the liberty server.
+   */
+
+  var port = '';
+  if (window.document.location.port === '') { 
+    port = (window.document.location.protocol === 'https:') ? 443 : 80;
+  } else {
+    port = window.document.location.port;
+  }
+
+  var providerConfig = {
+    server : window.document.location.hostname,
+    port : port,
+    //useSSL : true,
+    rtcommTopicPath: "/rtcommVideoSample/",
+    createEndpoint : true
+  };
+
+  // Define the EndpointProvider global variable
+  var ibmep = new rtcomm.EndpointProvider();
+  // Define the Endpoint global variable we will be using.
+  // The endpoint is what handles the webrtc functionality (connect/disconnect/etc.)
+  var rtcommEndpoint = null;
+
+  // UI State
+  var registered = false;
+  var connected = false;
+
+  // bootstrap/jquery make alerts closable
+  $().alert();
+
+  /********************************************************************
+   *  Rtcomm Functions
+   *******************************************************************/
+
+   /* doRegister()
+   *
+   * This function is the meat of the sample and shows how to
+   * init the EndpointProvider using providerConfig provided above.  This
+   * config is using createEndpoint = true so that 
+   * the init returns a rtcommEndpoint object.  
+   *
+   * This can be decoupled. getRtcommEndpoint() can be
+   * called on the fly after init() depending on the flow of your 
+   * application
+   * 
+   */
+  function doRegister(userid) {
+    updateMessage('Registering... '+ userid);
+    // Apply the ID entered to the config to initialize the endpoint
+    providerConfig.userid = userid;
+    /*
+     * Call init() on the Endpoint Provider.
+     */
+    ibmep
+          .init(
+              providerConfig,
+              /* onSuccess for init() will pass an object:
+               *  { endpoint: RtcommEndpoint ,   <-- RtcommEndpoint Object if created
+               *     ready: boolean,             <-- We are ready to proceed.
+               *     } 
+               */
+              function(object) { 
+                // Because createEndpoint is enabled, we expect an object
+                // returned in the onSuccess callback.
+                console.log('** videoClient.html ** init was successful, rtcommEndpoint: ', object);
+                // Update the UI with messages, etc..
+                updateMessage('Registered');
+                uiRegister(userid);
+                // set the endpoint to the global variable
+                rtcommEndpoint = object.endpoint;
+              }, function(error) { //onFailure
+                console.error('init failed: ', error);
+                alertMessage('Initialization and registration failed!');
+                uiUnregister();
+              });
+    return true;
+  };
+
+  // Handle resets on the endpoint provider
+  ibmep.on('reset', function(event_object) {
+    updateMessage("Connection was reset - reason: "+event_object.reason);
+  });
+
+  /*
+   *  Provide a default configuration for endpoints when they are created. 
+   * 
+   *  This happens prior to the doRegister above and defines the default callbacks to use for 
+   *  all RtcommEndpoints created by the EndpointProvider.
+   *
+   */
+  ibmep.setRtcommEndpointConfig({
+      // This means we will handle the enable on 'connect' 
+      autoEnable: true,     
+      // this handles the configuration of webrtc 
+      webrtcConfig: {       
+        broadcast:  { 
+          audio: true, 
+          video: true},
+        iceServers: ['stun:stun.l.google.com:19302','stun:stun1.l.google.com:19302','stun:stun2.l.google.com:19302'],
+        mediaOut: document.querySelector('#selfView'),
+        mediaIn: document.querySelector('#remoteView')
+      },
+      // Played when call is going out
+      ringbacktone: 'resources/ringbacktone.wav',
+      // played when inbound call occurrs
+      ringtone: 'resources/ringtone.wav',
+      // Fired when webrtc is connected 
+      'webrtc:connected': function(event_object) {
+        uiConnect("Connected to "+event_object.endpoint.getRemoteEndpointID());
+      },
+      // Fired when webrtc is disconnected 
+      'webrtc:disconnected': function(event_object) {
+         // Reset the UI
+         try {
+           uiDisconnect("Disconnected from "+ event_object.endpoint.getRemoteEndpointID());
+         } catch (e) {
+           console.error(e);
+         }
+      },
+      // An outbound call is starting and the target user has been reached.
+      'session:ringing': function(event_object) {
+         updateMessage('Calling ' + event_object.endpoint.getRemoteEndpointID() );
+      },
+      // An inbound call was received.
+      'session:alerting': function(event_object) {
+        // Use the global value to autoAnswer if configured.
+        $('#answerDialog .modal-body').html(
+              "Inbound call from " + event_object.endpoint.getRemoteEndpointID());
+        $('#answerDialog').modal('show');
+      },
+      // Establishing the session failed, display a message, cleanup.
+      'session:failed': function(event_object) {
+        alertMessage("Connection failed - reason: "+event_object.reason);
+      },
+      // An inbound Refer was received.  
+      'session:refer': function(conn) {
+        $('#answerDialog .modal-body').html(
+            "[3PCC] Initiate call to " + conn.endpoint.getRemoteEndpointID());
+        $('#answerDialog').modal('show');
+      }, 
+      /* The remote user muted audio or video 
+       * Check event_object.audio and event_object.video to see what was muted/unmuted
+       *
+       * This is necessary to indicate in the UI it has been muted.
+       */
+      'webrtc:remotemuted': function(event_object) {
+        var msg = 'The remote user ';
+        if (event_object.audio) {
+          if (event_object.video) {
+            msg = msg + ' resumed their broadcast'; 
+          } else {
+            msg = msg + ' muted their audio broadcast'; 
+          }
+        } else {
+          if (event_object.video) {
+            // audio false, video true
+            msg = msg + ' muted their audio broadcast'; 
+          } else {
+            // both false
+            msg = msg + ' muted their broadcast'; 
+          }
+        }
+       updateMessage(msg);
+     }
+  });
+
+  /*****************************************************************
+   * UI Related functionality
+   *
+   * This section handles manipulating the UI via jQuery/bootstrap
+   * in reaction to doRegister and the endpointCallbacks.
+   ****************************************************************/ 
+
+  function uiConnect(message) {
+      $('#btnConnect').text('Disconnect');
+      updateMessage(message || 'Unknown');
+      connected = true;
+  };
+
+  function uiDisconnect(message) {
+      if (connected) {
+        connected = false;
+        rtcommEndpoint.disconnect();
+        $('#btnConnect').text('Connect');
+        updateMessage(message || 'Unknown');
+      }
+  };
+
+  function uiRegister(id) {
+    var userid = id || 'unknown';
+    $('#displayNameStr').html('Welcome, <span class="blue">' + userid + '</span>');
+    updateMessage('Registered');
+    $('#btnConnect').prop('disabled', false);
+    $('#btnRegister').text('Unregister');
+    registered = true;
+  };
+  function uiUnregister() {
+    $('#displayNameStr').html('Please Register');
+    updateMessage('Please Register');
+    $('#btnConnect').prop('disabled', true);
+    $('#btnRegister').text('Register');
+    registered = false;
+  }
+
+  function updateMessage(message) {
+    $('#statusMessage').html(message);
+  }
+
+  $('#answerYes').on('click', function() {
+    $("#answerDialog").modal("hide");
+    /* Accept the inbound call */
+    rtcommEndpoint.accept();
+  });
+
+  $('#answerNo').on('click', function() {
+    $("#answerDialog").modal("hide");
+    state='disconnected';
+    /* Reject the inbound call */
+    rtcommEndpoint.reject();
+  });
+
+  $('#btnRegister').on('click', function() {
+    if (registered) {
+      /* unregister */
+      ibmep.destroy();
+      uiUnregister();
+    } else {
+      /* Launch register modal */
+      updateMessage('Registering');
+      $('#registerModal').modal('show');
+    }
+  });
+
+  $('#regGo').on('click', function() {
+    var userid = $("#userid").val();
+    console.log('regGo: userid is: >'+userid+'<');
+    // Make sure userid is set.
+    if (userid === "") {
+      console.log('regGo: userid is: >'+userid+'<');
+      $('#regAlert').show();
+      return false;
+    } else {
+      doRegister(userid);
+      $('#regAlert').hide();
+    }
+  });
+
+  $('#btnConnect').on('click', function() {
+    if (connected) {
+      /* disconnect */
+      uiDisconnect("Disconnected");
+    } else {
+      /* launch connect Modal */
+      $('#connectModal').modal('show');
+    }
+  });
+
+  $('#btnToggleBroadcast').on('click', function() {
+    if (connected) {
+      if (rtcommEndpoint.webrtc.isMuted()) {
+        /* Unmute a stream */
+        rtcommEndpoint.webrtc.unmute();
+        $('#toggleIcon').removeClass('glyphicon-play').addClass('glyphicon-pause');
+      } else {
+        /* mute the stream */
+        rtcommEndpoint.webrtc.mute();
+        $('#toggleIcon').removeClass('glyphicon-pause').addClass('glyphicon-play');
+      }
+    } 
+  });
+
+  $("#connectGo").on('click', function(event) {
+    var remoteid = $("#remoteid").val();
+    if (remoteid === "") {
+      $('#connAlert').show();
+      return false;
+    } else {
+      updateMessage('Connecting to '+remoteid);
+      // This is only necessary if you want to enable/connect in same motion. 
+      rtcommEndpoint.connect(remoteid);
+      $("#connectModal").modal("hide");
+      $('#connAlert').hide();
+    }
+    return false;
+  });
+
+  function alertMessage(message) {
+    $('#alertMessage').html(message);
+    $('#mainAlert').show();
+    $('#statusMessage').html("Please try again");
+  }
+</script>
+</body>
+</html>

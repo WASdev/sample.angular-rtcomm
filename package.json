@@ -1,0 +1,17 @@
+{
+  "name": "mqttMosca",
+  "version": "0.0.1",
+  "description": "Mosca MQTT Server for Rtcomm",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "bunyan": "^1.5.1",
+    "cfenv": "1.0.x",
+    "mosca": "^0.32.1"
+  },
+  "repository": {},
+  "engines": {
+    "node": "0.12.x"
+  }
+}

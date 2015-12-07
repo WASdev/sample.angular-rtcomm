@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html><LeftMouse>
+    <head>
+    <script src="../bower_components/bower-mqttws/mqttws31.js"></script>
+    <script src="../bower_components/webrtc-adapter/adapter.js"></script>
+    <script src="../dist/rtcomm.js"></script>
+    </head>
+    <body>
+
+      <button onclick="doRegister()">Register</button><input id="myid"></input>
+      <br>
+      <video height="200" id="selfView" autoplay="true" muted="true" ></video>
+      <video height="200" id="remoteView" autoplay="true"></video>
+      <br>
+      <input id="callee"></input>
+      <button onclick="connect()">Connect</button><button onclick="hangup()">Hangup</button>
+      <script>
+      /* 
+       * Define the configuration for the EndpointProvider.  THis is REQUIRED and generally must be changed.
+       * It MUST match the rtcomm configuration used on the liberty server.
+       */
+      var providerConfig = {
+        server : 'messagesight.demos.ibm.com',
+        port : 1883,
+        rtcommTopicPath: "/rtcommVideoSample/",
+        createEndpoint: true
+        requireRtcommServer: false,
+      };
+
+      // Define the EndpointProvider global variable
+      var ibmep = new rtcomm.EndpointProvider();
+      ibmep.setLogLevel('DEBUG');
+      ibmep.setRtcommEndpointConfig({
+          // This means we will handle the enable on 'connect' 
+          autoEnable: true,     
+          // this handles the configuration of webrtc 
+          webrtcConfig: {       
+            mediaOut: document.getElementById('selfView'),
+            mediaIn: document.getElementById('remoteView')
+          },
+        'session:alerting': function(event_object) {
+          // Automatically answer
+          rtcommEndpoint.accept();
+        },
+      });
+      // Define the Endpoint global variable we will be using.
+      // The endpoint is what handles the webrtc functionality (connect/disconnect/etc.)
+      var rtcommEndpoint = null;
+
+      var doRegister = function() {
+        var id = document.getElementById("myid").value;
+        console.log('Clicked? id is: '+id);
+        providerConfig.userid=id;
+        ibmep.init(providerConfig, function(obj) {
+            console.log('Registered!');
+            rtcommEndpoint = obj.endpoint;
+        });
+      };
+
+      var connect = function() {
+        var id = document.getElementById("callee").value;
+        providerConfig.userid=id;
+        rtcommEndpoint.connect(id);
+      }
+      var hangup = function() {
+        rtcommEndpoint.disconnect();
+      }
+      </script>
+
+
+    </body>
+
+</html>
