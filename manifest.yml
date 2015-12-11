@@ -3,6 +3,6 @@ applications:
   memory: 256M
   instances: 1
   domain: mybluemix.net
-  name: moscamqtt 
-  host: moscamqtt01
+  name: mqttbroker
+  host: mqttbroker 
   disk_quota: 1024M

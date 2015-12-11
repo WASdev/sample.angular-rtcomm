@@ -1,14 +1,27 @@
-# Node.js Starter Overview
+# Install Mosca on Bluemix
 
-The Node.js Starter demonstrates a simple, reusable Node.js web application based on the Express framework.
+This app runs inside a nodejs Blumeix app.  It servers the default 'videoClient' for testing/validation purposes.
 
-## Run the app locally
+## Install Locally 
 
-1. [Install Node.js][]
-2. Download and extract the starter code from the Bluemix UI
-3. cd into the app directory
-4. Run `npm install` to install the app's dependencies
-5. Run `npm start` to start the app
-6. Access the running app in a browser at http://localhost:6001
+1. Clone the app ` git clone git@github.rtp.raleigh.ibm.com:swgraham-us/moscamqtt.git`
+2. Run `npm install` to install the app's dependencies
+3. Run `npm start` to start the app
+4. Access the running app in a browser at http://localhost:6001
 
-[Install Node.js]: https://nodejs.org/en/download/
+## Update video Client (Optional)
+
+1.  Grab the release zip file from here:  [lib.rtcomm.clientjs](https://github.com/WASdev/lib.rtcomm.clientjs/releases/latest)
+2.  Change to the app directory `cd moscamqtt`  
+3.  Unzip the relase file: `unzip lib.rtcomm.clientjs-sample-<someversion>.zip`
+4.  Copy files into `./public` : `cp -r lib.rtcomm.clientjs-sample-<someversion>/* ./public`
+
+TODO:  Automate the above, some stuff will still not work[ diff the videoClient.html/videoClient-adv.html].
+
+## Deploy to bluemix
+
+This app deploys to 'mqttbroker.mybluemix.net'  This runs in the 'Org' WASdev
+
+1.  Login to bluemix:  `cf login -o WASdev`
+2.  push the app `cf push`
+

@@ -1,7 +1,7 @@
 /*eslint-env node*/
 
 //------------------------------------------------------------------------------
-// node.js starter application for Bluemix
+// Mosca app for node.js
 //------------------------------------------------------------------------------
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
@@ -10,11 +10,8 @@ var mosca = require('mosca');
 var bunyan = require('bunyan');
 
 var log = bunyan.createLogger({name: 'MqttServer', level: 'info'});
-
 var port = cfenv.getAppEnv().port;
-//(parseInt(process.env.VCAP_APP_PORT) || 8080);
 var host = cfenv.getAppEnv().bind; 
-//(process.env.VCAP_APP_HOST || 'localhost');
 
 // We are using Memory for peristence
 var settings = {
