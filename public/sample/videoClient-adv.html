@@ -155,8 +155,12 @@ from jquery.com/downloads.  This app was tested with jQuery 2.1.4.
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 <!-- The following paths may need to be modified depending on the location of this script. -->
+<!-- If you load via bower, use it this way
 <script src="../bower_components/bower-mqttws/mqttws31.js"></script>
 <script src="../bower_components/webrtc-adapter/adapter.js"></script>
+-->
+<script src="//git.eclipse.org/c/paho/org.eclipse.paho.mqtt.javascript.git/plain/src/mqttws31.js"></script>
+<script src="//cdn.rawgit.com/webrtc/adapter/master/adapter.js"></script>
 
 <script src="../dist/rtcomm.js"></script>
 
@@ -202,10 +206,12 @@ The primary logic for this HTML Page
   var providerConfig = {
     server : window.document.location.hostname,
 //    port : window.document.location.port,
+//    sslport: 443,
+//    port: 80,
+//    useSSL: true,
     managementTopicName : "management",
     appContext: "default",
-    rtcommTopicPath: "/rtcommVideoClientSample-12345/",
-    iceServers: ['stun:stun.l.google.com:19302', 'stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
+    rtcommTopicPath: "/rtcomm/",
     createEndpoint : true,
     monitorPresence: true,
     presence: {topic: 'defaultRoom'}
@@ -232,7 +238,8 @@ The primary logic for this HTML Page
   var requireRtcommServer = (urlConfig.requireRtcommServer === 'true')? true: false;
   var BROADCAST = (urlConfig.broadcast === 'false')? false: true;
   // Update to boolean
-  urlConfig.useSSL = (urlConfig.useSSL === 'true')? true: false;
+  // we will figure it out based on being served over https (or should)
+  // urlConfig.useSSL = (urlConfig.useSSL === 'true')? true: false;
   // This uses any params passed on URL to override config.
   updateConfig(providerConfig, urlConfig);
 
@@ -301,6 +308,7 @@ The primary logic for this HTML Page
       // BROADCAST is set at the top
       autoEnable: true,
       webrtcConfig: {
+        iceServers: ['stun:stun.l.google.com:19302', 'stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
         broadcast:  { 
           audio: BROADCAST, 
           video: BROADCAST},

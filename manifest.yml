@@ -3,6 +3,6 @@ applications:
   memory: 256M
   instances: 1
   domain: mybluemix.net
-  name: mqttbroker
-  host: mqttbroker 
+  name: mqtt4rtcomm
+  host: mqtt4rtcomm
   disk_quota: 1024M

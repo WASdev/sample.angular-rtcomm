@@ -20,7 +20,7 @@ TODO:  Automate the above, some stuff will still not work[ diff the videoClient.
 
 ## Deploy to bluemix
 
-This app deploys to 'mqttbroker.mybluemix.net'  This runs in the 'Org' WASdev
+This app deploys to 'mqtt4rtcomm'  This runs in the 'Org' WASdev
 
 1.  Login to bluemix:  `cf login -o WASdev`
 2.  push the app `cf push`

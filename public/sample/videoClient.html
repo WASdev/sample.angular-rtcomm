@@ -173,8 +173,7 @@ The primary logic for this HTML Page
     server: window.document.location.hostname,
    // port : window.document.location.port,
 //    port : 1883,
-    rtcommTopicPath: "/rtcommVideoClientSample-12345/",
-    iceServers: ['stun:stun.l.google.com:19302', 'stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
+    rtcommTopicPath: "/rtcommVideoSample/",
     createEndpoint : true
   };
 
@@ -256,6 +255,7 @@ The primary logic for this HTML Page
       autoEnable: true,     
       // this handles the configuration of webrtc 
       webrtcConfig: {       
+        iceServers: ['stun:stun.l.google.com:19302', 'stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
         broadcast:  { 
           audio: true, 
           video: true},
@@ -342,6 +342,7 @@ The primary logic for this HTML Page
   function uiDisconnect(message) {
       if (connected) {
         connected = false;
+        console.log('Calling disconnect on endpoint');
         rtcommEndpoint.disconnect();
         $('#btnConnect').text('Connect');
         updateMessage(message || 'Unknown');
