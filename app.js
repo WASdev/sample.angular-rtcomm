@@ -11,7 +11,7 @@ var bunyan = require('bunyan');
 
 var log = bunyan.createLogger({name: 'MqttServer', level: 'info'});
 var port = cfenv.getAppEnv().port || 3000;
-var host = cfenv.getAppEnv().bind || localhost;
+var host = cfenv.getAppEnv().bind;
 
 // We are using Memory for peristence
 var settings = {

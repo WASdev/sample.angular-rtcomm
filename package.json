@@ -8,7 +8,9 @@
   "dependencies": {
     "bunyan": "^1.5.1",
     "cfenv": "1.0.x",
-    "mosca": "^0.32.1"
+    "mosca": "^0.32.1",
+    "bower": "^1.7.2"
+
   },
   "license": "Apache-2.0",
   "repository": {},
@@ -16,7 +18,9 @@
     "node": "0.12.x"
   },
   "devDependencies": {
-    "bower": "^1.7.2",
-    "jshint": "^2.8.0"
+    "gulp": "^3.9.0",
+    "gulp-jshint": "^2.0.0",
+    "jshint": "^2.8.0",
+    "jshint-stylish": "^2.1.0"
   }
 }
