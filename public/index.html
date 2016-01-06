@@ -59,7 +59,7 @@
                 <br>
             </div>
 
-            <div ng-controller="SessionController as vm" class="col-md-4">
+            <div ng-controller="SessionController as session" class="col-md-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <span class="glyphicon glyphicon-facetime-video"></span> Video
@@ -72,7 +72,7 @@
                 <div class="row">
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
-                        <button type="button" class="btn btn-default btn-block">Disconnect</button>
+                        <button type="button" class="btn btn-default btn-block" id="sessionDCBtn" ng-click="session.disconnect()">Disconnect</button>
                     </div>
                 </div>
             </div>

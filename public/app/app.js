@@ -1,18 +1,23 @@
+(function() {
+
+    'use strict';
     angular
-    .module('sample-app', ['angular-rtcomm'])
-    .controller('SessionController', SessionController)
+        .module('sample-app', ['angular-rtcomm'])
+        .controller('SessionController', SessionController);
     SessionController.$inject = ['RtcommService', '$log'];
 
     function SessionController(RtcommService, $log) {
-        var vm = this;
+        var session = this;
         var endpoint;
 
-        vm.disconnect = disconnect;
+        session.disconnect = disconnect;
 
         function disconnect() {
+
+            $log.debug('sample-app - Disconnecting...');
             endpoint = RtcommService.getEndpoint(RtcommService.getActiveEndpoint());
-            $log.debug('sample-app => Disconnecting...');
             endpoint.disconnect();
-            $log.debug('sample-app => Disconnected.');
+            $log.debug('sample-app - Disconnected.');
         }
     }
+})();

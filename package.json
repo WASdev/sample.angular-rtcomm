@@ -1,21 +1,22 @@
 {
-    "name": "sample.angular-rtcomm",
-    "version": "0.0.1",
-    "description": "Sample App + Mosca MQTT Server for Angular-Rtcomm",
-    "scripts": {
-        "start": "npm install; cd public; bower install; cd .. ; node app.js | bunyan -o short"
-    },
-    "dependencies": {
-        "bunyan": "^1.5.1",
-        "cfenv": "1.0.x",
-        "mosca": "^0.32.1"
-    },
-    "license": "Apache-2.0",
-    "repository": {},
-    "engines": {
-        "node": "0.12.x"
-    },
-    "devDependencies": {
-        "bower": "^1.7.2"
-    }
+  "name": "sample.angular-rtcomm",
+  "version": "0.0.1",
+  "description": "Sample App + Mosca MQTT Server for Angular-Rtcomm",
+  "scripts": {
+    "start": "npm install; cd public; bower install; cd .. ; node app.js | bunyan -o short"
+  },
+  "dependencies": {
+    "bunyan": "^1.5.1",
+    "cfenv": "1.0.x",
+    "mosca": "^0.32.1"
+  },
+  "license": "Apache-2.0",
+  "repository": {},
+  "engines": {
+    "node": "0.12.x"
+  },
+  "devDependencies": {
+    "bower": "^1.7.2",
+    "jshint": "^2.8.0"
+  }
 }
