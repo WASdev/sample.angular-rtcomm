@@ -1,0 +1,25 @@
+{
+  "name": "sample.angular-rtcomm",
+  "authors": [
+    "Jose F. Martinez <jfmartin@us.ibm.com>"
+  ],
+  "description": "Sample project for developers to try out angular-rtcomm",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "angular-rtcomm"
+  ],
+  "license": "Apache 2.0",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-rtcomm": "~1.0.3"
+  }
+}

@@ -2,7 +2,7 @@
 
 This app runs inside a nodejs Blumeix app.  It servers the default 'videoClient' for testing/validation purposes.
 
-## Install Locally 
+## Install Locally
 
 1. Clone the app ` git clone git@github.rtp.raleigh.ibm.com:swgraham-us/moscamqtt.git`
 2. Run `npm install` to install the app's dependencies
@@ -24,4 +24,3 @@ This app deploys to 'mqtt4rtcomm'  This runs in the 'Org' WASdev
 
 1.  Login to bluemix:  `cf login -o WASdev`
 2.  push the app `cf push`
-

@@ -10,8 +10,8 @@ var mosca = require('mosca');
 var bunyan = require('bunyan');
 
 var log = bunyan.createLogger({name: 'MqttServer', level: 'info'});
-var port = cfenv.getAppEnv().port;
-var host = cfenv.getAppEnv().bind; 
+var port = cfenv.getAppEnv().port || 3000;
+var host = cfenv.getAppEnv().bind || localhost;
 
 // We are using Memory for peristence
 var settings = {
@@ -51,6 +51,5 @@ server.on('ready', setup);
 // fired when the mqtt server is ready
 function setup() {
   log.info('Mosca server is up and running');
+  log.info('Access the Sample App at: http:%s:%s', host, port);
 }
-
-

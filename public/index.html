@@ -1,36 +1,89 @@
 <!DOCTYPE html>
-<html>
+
+<html ng-app="sample-app">
+
 <head>
-<meta charset="US-ASCII">
-<title>rtcomm JavaScript Client Library package</title>
+    <meta charset="utf-8">
+    <title>angular-rtcomm sample</title>
+
+    <!-- Stylesheets -->
+    <link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./bower_components/angular-tree-control/css/tree-control-attribute.css" rel="stylesheet">
+
+
+    <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./bower_components/bower-mqttws/mqttws31.js"></script>
+    <script src="./bower_components/webrtc-adapter/adapter.js"></script>
+    <script src="./bower_components/rtcomm/dist/rtcomm.min.js"></script>
+    <script src="./bower_components/angular/angular.min.js"></script>
+    <script src="./bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="./bower_components/angular-tree-control/angular-tree-control.js"></script>
+
+    <!-- angular-rtcomm dependencies -->
+    <link href="./bower_components/angular-rtcomm/dist/css/angular-rtcomm.css" rel="stylesheet">
+    <script src="./bower_components/angular-rtcomm/dist/angular-rtcomm.min.js"></script>
+
+    <script src="app/app.js"></script>
 </head>
+
 <body>
 
+    <!-- Navbar -->
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">angular-rtcomm sample</a>
+            </div>
+        </div>
+    </nav>
 
-  <h1>rtcomm JavaScript Client Library package
-    
-  </h1>
-  <hr>
-  <p>
-  If you have opened this file in a Browser, then the sample/videoClient.html link will not be able to access your Local Media.  It needs to be accessed from a server.
-  The jsdoc link describes how to set this up.
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1">
 
-</p>
+            </div>
+            <div class="col-md-3">
 
-  <div id="warning" style="display:none; color:red">
-  NOTE:  You should have accessed this page via HTTPS !!!!  
-  </div>
+                <rtcomm-register></rtcomm-register>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-user"></span> Presence
+                    </div>
+                    <div class="panel-body" style="height:200px; position:relative; overflow-y: scroll; overflow-x: auto">
+                        <rtcomm-presence ng-init="monitorTopics=['sampleRoom']; init({'flatten': true, 'webrtc': true})"></rtcomm-presence>
+                    </div>
+                </div>
 
-  <ul>
-    <li><a href="sample/videoClient.html"> simple Sample Video client</a></li>
-    <li><a href="sample/videoClient-adv.html"> Advanced Sample Video client</a></li>
-    <li><a href="jsdoc/index.html"> JSDoc for rtcomm.js library</a></li>
-  </ul>
-  <script>
-    if (document.URL.search('https')< 0) {
-      document.getElementById('warning').style.display='block';
-    }
-  </script>
+                <rtcomm-endpoint-status></rtcomm-endpoint-status>
+                <br>
+            </div>
+
+            <div ng-controller="SessionController as vm" class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-facetime-video"></span> Video
+                    </div>
+
+                    <div class="video-panel">
+                        <rtcomm-video></rtcomm-video>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-default btn-block">Disconnect</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <rtcomm-chat></rtcomm-chat>
+            </div>
+        </div>
+    </div>
+    <div ng-controller="RtcommConfigController" ng-init="init('rtcommConfig.json')"></div>
+    <div ng-controller="RtcommAlertModalController"></div>
 </body>
 
 </html>
