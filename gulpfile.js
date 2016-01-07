@@ -5,7 +5,7 @@ var gulp = require('gulp'),
 var paths = {
     scripts: ['gulpfile.js', 'app.js', 'public/app/*.js'],
     templates: ['public/index.html']
-}
+};
 
 gulp.task('lint', function() {
     var jshint_conf = {

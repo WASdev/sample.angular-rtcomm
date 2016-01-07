@@ -87,10 +87,10 @@
 
         $scope.$on('session:stopped', function(){
           session.connected = false;
-        })
+        });
         $scope.$on('session:started', function(){
           session.connected = true;
-        })
+        });
     }
 
     ModalController.$inject = ['$scope', '$modalInstance'];
