@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "Sample App + Mosca MQTT Server for Angular-Rtcomm",
   "scripts": {
-	"install": "npm install; cd public; bower install;",
+    "install": "npm install; cd public; bower install;",
     "start": " node app.js | bunyan -o short",
-	"uninstall": "npm uninstall; cd public; bower uninstall;"
+    "uninstall": "npm uninstall; cd public; bower uninstall;"
   },
   "dependencies": {
     "bunyan": "^1.5.1",
@@ -23,6 +23,7 @@
     "chai-as-promised": "^5.2.0",
     "gulp": "^3.9.0",
     "gulp-jshint": "^2.0.0",
+    "gulp-watch": "^4.3.5",
     "jshint": "^2.8.0",
     "jshint-stylish": "^2.1.0",
     "mocha": "^2.3.4",

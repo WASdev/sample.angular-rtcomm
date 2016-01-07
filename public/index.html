@@ -70,8 +70,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+
+                        <button type="button" class="btn btn-primary btn-block" id="sessionConnectBtn" ng-disabled="!session.registered" ng-click="session.openModal()">Connect</button>
+
+                    </div>
+                    <div class="col-md-5">
                         <button type="button" class="btn btn-default btn-block" id="sessionDCBtn" ng-disabled="!session.connected" ng-click="session.disconnect()">Disconnect</button>
                     </div>
                 </div>
@@ -84,6 +89,24 @@
     </div>
     <!-- <div ng-controller="RtcommConfigController" ng-init="init('rtcommConfig.json')"></div> -->
     <div ng-controller="RtcommAlertModalController"></div>
+
+    <script type="text/ng-template" id="connectModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Connect</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" placeholder="Username" ng-model="modal.callee">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="modal.ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="modal.cancel()">Cancel</button>
+        </div>
+    </script>
 </body>
 
 </html>

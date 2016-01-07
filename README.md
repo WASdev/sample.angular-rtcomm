@@ -4,12 +4,12 @@ This is a sample project that showcases some of the features of the [angular-rtc
 ## Install Locally
 1. Clone the app `git@github.rtp.raleigh.ibm.com:jfmartin-us/moscamqtt.git`
 2. Change directory to `moscamqtt`
-3. Run `npm start` to start the app and install the dependencies
-4. Access the running app in a browser at [http://localhost:6001](http://localhost:6001)
+3. Run `npm install` to install the dependencies for the server and client side
+4. Run `npm start` to run the app
+5. Access the app at [http://localhost:6001](http://localhost:6001) (port may change depending on your environment)
+<!--## Deploy to bluemix-->
 
-## Deploy to bluemix
-
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=<https://github.rtp.raleigh.ibm.com/jfmartin-us/moscamqtt.git> # [required])
+<!--[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=<https://github.rtp.raleigh.ibm.com/jfmartin-us/moscamqtt.git># [required])
 
 <!-- OR -->
 
