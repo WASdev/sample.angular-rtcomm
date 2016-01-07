@@ -37,7 +37,6 @@
             </div>
         </div>
     </nav>
-
     <div class="container">
         <div class="row">
             <div class="col-md-1">
@@ -73,7 +72,7 @@
                     <div class="col-md-1"></div>
                     <div class="col-md-5">
 
-                        <button type="button" class="btn btn-primary btn-block" id="sessionConnectBtn" ng-disabled="!session.registered" ng-click="session.openModal()">Connect</button>
+                        <button type="button" class="btn btn-primary btn-block" id="sessionConnectBtn" ng-disabled="!session.registered || session.connected" ng-click="session.openModal()">Connect</button>
 
                     </div>
                     <div class="col-md-5">
@@ -92,19 +91,27 @@
 
     <script type="text/ng-template" id="connectModal.html">
         <div class="modal-header">
-            <h3 class="modal-title">Connect</h3>
+            <h4 class="modal-title">Connect</h4>
         </div>
         <div class="modal-body">
+            <p>Enter the User ID to connect to. The user must be already registered on the page.</p>
+
             <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <input class="form-control" type="text" placeholder="Username" ng-model="modal.callee">
+
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+
+                    <br/>
+                    <div class="input-group">
+                        <span class="input-group-addon">ID:</span>
+                        <input class="form-control" type="text" placeholder="Username" ng-model="modal.callee">
+                    </div>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="modal.ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="modal.cancel()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="modal.ok()">Connect</button>
+            <button class="btn btn-default" type="button" ng-click="modal.cancel()">Cancel</button>
         </div>
     </script>
 </body>

@@ -88,7 +88,7 @@
         $scope.$on('session:stopped', function(){
           session.connected = false;
         })
-        $scope.$on('sesssion:started', function(){
+        $scope.$on('session:started', function(){
           session.connected = true;
         })
     }
