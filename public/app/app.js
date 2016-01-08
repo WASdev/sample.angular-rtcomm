@@ -27,7 +27,7 @@
         function initialize() {
             var config = {
                 "server": window.location.hostname || 'localhost',
-                "port": window.location.port || 80,
+                "port": 6001,
                 "rtcommTopicPath": "/rtcomm/",
                 "presenceTopic": "sampleRoom",
                 "userid": ""
