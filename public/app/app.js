@@ -1,54 +1,31 @@
 (function() {
 
     'use strict';
+
     angular
         .module('sample-app', ['angular-rtcomm'])
-        .run(rtcommAppInit)
-        .factory('rtcommConfig', rtcommConfig)
         .controller('SessionController', SessionController)
         .controller('ModalController', ModalController);
 
-    rtcommAppInit.$inject = ['rtcommConfig'];
-
-    function rtcommAppInit(rtcommConfig) {
-        rtcommConfig.initialize();
-    }
-
-    rtcommConfig.$inject = ['RtcommService', '$log'];
-
-    function rtcommConfig(RtcommService, $log) {
-        var service = {
-            initialize: initialize
-        };
-
-        return service;
-        /////////////////////////
-
-        function initialize() {
-            var config = {
-                "server": window.location.hostname || 'localhost',
-                "port": 6001,
-                "rtcommTopicPath": "/rtcomm/",
-                "presenceTopic": "sampleRoom",
-                "userid": ""
-            };
-
-            //Set configuration
-            RtcommService.setConfig(config);
-
-        }
-    }
-
     SessionController.$inject = ['$scope', 'RtcommService', '$log', '$modal'];
 
+    /**
+     * [Controller maintains the state of the session as well as carry out calls,
+     * listen for state changes]
+     * @param {[type]} $scope        [Controller scope]
+     * @param {[type]} RtcommService [RtcommService is the main service from the angular-rtcomm, contains features such as placing calls programmatically  ]
+     * @param {[type]} $log          [AngularJS Logger]
+     * @param {[type]} $modal        [Angular-Bootstrap modal service]
+     */
     function SessionController($scope, RtcommService, $log, $modal) {
         var session = this;
-        var endpoint;
 
+        session.registered = false;
         session.connected = false;
         session.openModal = openModal;
         session.connect = connect;
         session.disconnect = disconnect;
+
 
         function openModal() {
             var options = {
@@ -71,7 +48,7 @@
         function disconnect() {
 
             $log.debug('sample-app - Disconnecting...');
-            endpoint = RtcommService.getEndpoint(RtcommService.getActiveEndpoint());
+            var endpoint = RtcommService.getEndpoint(RtcommService.getActiveEndpoint());
             endpoint.disconnect();
             $log.debug('sample-app - Disconnected.');
         }

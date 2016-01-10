@@ -3,6 +3,6 @@ applications:
   memory: 256M
   instances: 1
   domain: mybluemix.net
-  name: mqtt4rtcomm
-  host: mqtt4rtcomm
+  name: mqtt4rtcomm-jfmartin
+  host: mqtt4rtcomm-jfmartin
   disk_quota: 1024M

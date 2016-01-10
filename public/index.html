@@ -37,6 +37,7 @@
             </div>
         </div>
     </nav>
+
     <div class="container">
         <div class="row">
             <div class="col-md-1">
@@ -86,9 +87,14 @@
             </div>
         </div>
     </div>
-    <!-- <div ng-controller="RtcommConfigController" ng-init="init('rtcommConfig.json')"></div> -->
+
+    <!-- Load the Rtcomm Config -->
+    <div ng-controller="RtcommConfigController" ng-init="init('rtcommConfig.json')"></div>
+
+    <!-- Alert Modal Controller -->
     <div ng-controller="RtcommAlertModalController"></div>
 
+    <!-- Connect Modal -->
     <script type="text/ng-template" id="connectModal.html">
         <div class="modal-header">
             <h4 class="modal-title">Connect</h4>

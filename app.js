@@ -9,9 +9,12 @@ var cfenv = require('cfenv');
 var mosca = require('mosca');
 var bunyan = require('bunyan');
 
+var appEnv = cfenv.getAppEnv();
 var log = bunyan.createLogger({name: 'MqttServer', level: 'info'});
-var port = cfenv.getAppEnv().port || 3000;
-var host = cfenv.getAppEnv().bind;
+
+
+var port = appEnv.isLocal ? 3000 : cfenv.getAppEnv().port;
+var host = appEnv.isLocal ? 'localhost' : cfenv.getAppEnv().bind;
 
 // We are using Memory for peristence
 var settings = {

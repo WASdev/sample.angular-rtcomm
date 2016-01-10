@@ -1,8 +1,6 @@
 {
-    "server": "localhost",
-    "port": 6001,
-    "rtcommTopicPath": "/rtcomm/",
-    "createEndpoint": true,
-    "presenceTopic": "sampleRoom",
-    "userid": ""
+	"rtcommTopicPath": "/rtcomm/",
+	"createEndpoint": true,
+	"presenceTopic": "sampleRoom",
+	"userid": ""
 }
