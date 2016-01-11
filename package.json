@@ -2,16 +2,18 @@
   "name": "sample.angular-rtcomm",
   "version": "0.0.1",
   "description": "Sample App + Mosca MQTT Server for Angular-Rtcomm",
+  "author": "Jose F. Martinez <jfmartin@us.ibm.com>",
   "scripts": {
     "postinstall": "cd public/; ../node_modules/.bin/bower install;",
     "start": "node app.js | ./node_modules/.bin/bunyan -o short",
+    "lint": "./node_modules/.bin/eslint app.js public/app/app.js test/**/*.js; exit 0;",
     "test": "node_modules/.bin/webdriver-manager update; node_modules/.bin/protractor test/e2e-session/session-conf.js"
   },
   "dependencies": {
     "bower": "^1.7.2",
     "bunyan": "^1.5.1",
     "cfenv": "1.0.x",
-    "mosca": "^0.32.1",
+    "mosca": "^0.32.1"
   },
   "license": "Apache-2.0",
   "repository": {},
@@ -19,9 +21,10 @@
     "node": "0.12.x"
   },
   "devDependencies": {
-    "protractor": "^3.0.0",
     "chai": "^3.4.1",
     "chai-as-promised": "^5.2.0",
+    "eslint": "^1.10.3",
     "mocha": "^2.3.4",
+    "protractor": "^3.0.0"
   }
 }

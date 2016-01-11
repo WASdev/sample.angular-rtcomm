@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 
+<!-- Declare the angular app -->
 <html ng-app="sample-app">
 
 <head>
@@ -44,22 +45,24 @@
 
             </div>
             <div class="col-md-3">
-
+                <!-- Rtcomm Directive: Can be used to register the endpoint -->
                 <rtcomm-register></rtcomm-register>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <span class="glyphicon glyphicon-user"></span> Presence
                     </div>
                     <div class="panel-body" style="height:200px; position:relative; overflow-y: scroll; overflow-x: auto">
+                        <!-- Rtcomm Directive: Displays other users subscribed in the same topic -->
                         <rtcomm-presence ng-init="monitorTopics=['sampleRoom']; init({'flatten': true, 'webrtc': true})"></rtcomm-presence>
                     </div>
                 </div>
 
+                <!-- Rtcomm Directive: Displays the status of the endpoint -->
                 <rtcomm-endpoint-status></rtcomm-endpoint-status>
                 <br>
             </div>
 
-            <div ng-controller="SessionController as session" class="col-md-4">
+            <div ng-controller="SessionController as vm" class="col-md-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <span class="glyphicon glyphicon-facetime-video"></span> Video
@@ -73,11 +76,11 @@
                     <div class="col-md-1"></div>
                     <div class="col-md-5">
 
-                        <button type="button" class="btn btn-primary btn-block" id="sessionConnectBtn" ng-disabled="!session.registered || session.connected" ng-click="session.openModal()">Connect</button>
+                        <button type="button" class="btn btn-primary btn-block" id="sessionConnectBtn" ng-disabled="!vm.registered || session.connected" ng-click="vm.openModal()">Connect</button>
 
                     </div>
                     <div class="col-md-5">
-                        <button type="button" class="btn btn-default btn-block" id="sessionDCBtn" ng-disabled="!session.connected" ng-click="session.disconnect()">Disconnect</button>
+                        <button type="button" class="btn btn-default btn-block" id="sessionDCBtn" ng-disabled="!vm.connected" ng-click="vm.disconnect()">Disconnect</button>
                     </div>
                 </div>
             </div>
@@ -110,14 +113,14 @@
                     <br/>
                     <div class="input-group">
                         <span class="input-group-addon">ID:</span>
-                        <input class="form-control" type="text" placeholder="Username" ng-model="modal.callee">
+                        <input class="form-control" type="text" placeholder="Username" ng-model="vm.callee">
                     </div>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="modal.ok()">Connect</button>
-            <button class="btn btn-default" type="button" ng-click="modal.cancel()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="vm.ok()">Connect</button>
+            <button class="btn btn-default" type="button" ng-click="vm.cancel()">Cancel</button>
         </div>
     </script>
 </body>
