@@ -3,54 +3,42 @@ var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 var expect = chai.expect;
+var q = require('q');
+var RtcommHelper = require('./lib/browser-profile-generator.js');
 
 ///Define the users in the session
 var session = [{
-	browserName: 'chrome',
+	browserName: process.env.BROWSER || 'chrome',
 	userName: 'testUserOne',
 	caller: true
 }, {
-	browserName: 'chrome',
+	browserName: process.env.BROWSER || 'chrome',
 	userName: 'testUserTwo'
 }];
 
-var chromeFlags = {
-	'args': ['--start-maximized',
-		'--allow-file-access-from-files',
-		'--disable-gesture-requirement-for-media-playback',
-		'--allow-file-access',
-		'--use-fake-ui-for-media-stream',
-		'--use-fake-device-for-media-stream',
-		'--start-maximized'
-	]
-};
-
 function establishSessionMeta(capabilities) {
 	var USERS = [];
+	var promises = [];
+	// var defer = q.defer();
+
 	capabilities.forEach(function(cap) {
 
 		cap.USERS = USERS;
 		USERS.push(cap.userName);
 
-		if (cap.browserName === 'chrome') {
-			cap.chromeOptions = chromeFlags;
-		}
-
-		//TODO Add Firefox Clients
+		promises.push(RtcommHelper.generateBrowserProfile(cap));
 
 	});
-
-	return capabilities;
+	return q.all(promises);
 }
-
-var caps = establishSessionMeta(session);
 
 exports.config = {
 	directConnect: true,
 	specs: ['session-spec.js'],
 
-	multiCapabilities: caps,
-
+	getMultiCapabilities: function() {
+		return establishSessionMeta(session);
+	},
 	onPrepare: function() {
 
 		global.expect = expect;

@@ -25,5 +25,9 @@ The sample comes with a built in test to verify the functionality. If you want t
 1. Start up the app :`npm start`
 2. Open a separate tab and run the test script:`npm test`
 
+By default it will use **chrome** to run the tests, if you want to run the tests in **firefox** define the environment variable:
+```
+BROWSER=firefox npm test
+```
 ## Deploy To Bluemix
 If you're looking to use the sample on a live server, you can easily deploy it to Bluemix:

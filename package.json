@@ -25,6 +25,10 @@
     "chai-as-promised": "^5.2.0",
     "eslint": "^1.10.3",
     "mocha": "^2.3.4",
-    "protractor": "^3.0.0"
+    "protractor": "^3.0.0",
+    "firefox-profile": "^0.3.11",
+    "q": "^1.4.1"
+
+
   }
 }
